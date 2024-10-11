@@ -1,0 +1,9 @@
+Cambiar pantalla menu, se ve con mucho zoom
+Cambiar pantalla settings, se ve con mucho zoom
+Cambiar pantalla google, se ve con mucho zoom
+Cambiar pantalla start, se ve con mucho zoom
+Cambiar pantalla de juego, se ve con mucho zoom
+Reducir velocidad de ataque, no se aprecia bien
+Aumentar el tiempo de ataque del enemigo, se tarda muchosimo en atacar
+inspeccionar los colliders a veces no se ve muy coherente cuando se ignoran
+Aumentar la visibilidad del handler slider, no se aprecia donde lo dejaste
