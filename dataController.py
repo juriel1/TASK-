@@ -1,5 +1,5 @@
 import pymongo
-import struct
+import os
 
 class DController():
     def __init__(self,user):
@@ -128,6 +128,8 @@ class SecionController():
         self.client = "mongodb://localhost:27017/"
         self.db = "TASKs"
         self.collection_task = "users"
+        self.path = r"C:\Program Files\TASKs"
+        self.path_file = os.path.join(self.path, "state.txt")
 
     def siginup_db(self,name,mail,pass_,repass_):
         if name is not None and mail is not None or pass_ is not None and repass_ is not None:
@@ -171,7 +173,7 @@ class SecionController():
                 if document:
                     print("User rigth exists")       
                     val = f"{document.get('Name')}${mail}${pass_}"
-                    with open('state.txt', 'w') as file:
+                    with open(self.path_file, 'w') as file:
                         file.write(val)
                     return ("OK",document.get('Name'),document.get('Mail'))
                 else:
@@ -179,12 +181,12 @@ class SecionController():
                     return "NOK "
 
     def logut_db(self):
-        with open('state.txt', 'w') as file:
+        with open(self.path_file, 'w') as file:
             file.write("")
         return ("OK")
 
     def pre_login_db(self):
-        with open('state.txt', 'r') as file:
+        with open(self.path_file, 'r') as file:
             f_line = file.readline()
             if f_line != "":
                 data = f_line.split('$')
