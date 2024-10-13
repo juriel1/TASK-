@@ -11,7 +11,7 @@ def is_admin():
         return False
 
 def main(page: ft.Page):
-    path = r"C:\Program Files\TASKs"
+    path = os.path.join(os.getenv('LOCALAPPDATA'), "TASKs")
     path_file = os.path.join(path, "state.txt")
 
     if not os.path.exists(path):

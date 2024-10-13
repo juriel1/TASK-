@@ -128,7 +128,7 @@ class SecionController():
         self.client = "mongodb://localhost:27017/"
         self.db = "TASKs"
         self.collection_task = "users"
-        self.path = r"C:\Program Files\TASKs"
+        self.path = os.path.join(os.getenv('LOCALAPPDATA'), "TASKs")
         self.path_file = os.path.join(self.path, "state.txt")
 
     def siginup_db(self,name,mail,pass_,repass_):
