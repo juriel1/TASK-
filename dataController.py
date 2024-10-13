@@ -71,6 +71,44 @@ class DController():
                     else:
                         print(f"new TASK {task} in Theme {theme_father} in User {self.current_user} NOK")
 
+    def delete_task_db(self,theme_father,task):
+        client = pymongo.MongoClient(self.client)
+        db = client[self.db]
+        coleccion = db[self.collection_task]
+
+        filter = {"User": self.current_user}
+        document = coleccion.find_one(filter)
+
+        try:
+            if document:
+                for field,field_value in document.items():
+                    if field_value == theme_father:
+                        task_name = f"Task{field[-1]}"
+                        filter2 = {field:field_value}
+                        update_data = {"$pull":{task_name:task}}
+                        coleccion.update_one(filter2,update_data)        
+        except Exception as e:
+            print(f"Error: {e}")
+
+    def delete_theme_db(self,theme_father):
+        client = pymongo.MongoClient(self.client)
+        db = client[self.db]
+        coleccion = db[self.collection_task]
+
+        filter = {"User": self.current_user}
+        document = coleccion.find_one(filter)
+
+        try:
+            if document:
+                for field,field_value in document.items():
+                    if field_value == theme_father:
+                        task_name = f"Task{field[-1]}"
+                        update_data = {"$unset": {field: "",task_name: ""}}
+                        coleccion.update_one(filter,update_data)        
+        except Exception as e:
+            print(f"Error: {e}")
+
+
     def read_doc_to_user(self):
         client = pymongo.MongoClient(self.client)
         db = client[self.db]
@@ -132,18 +170,28 @@ class SecionController():
 
                 if document:
                     print("User rigth exists")       
-                    valor = 1
-                    with open('state.bin', 'wb') as file:
-                        file.write(struct.pack('B', valor))
-                    return ("OK",document.get('Name'))
+                    val = f"{document.get('Name')}${mail}${pass_}"
+                    with open('state.txt', 'w') as file:
+                        file.write(val)
+                    return ("OK",document.get('Name'),document.get('Mail'))
                 else:
                     print("User not exists")
                     return "NOK "
-                
+
+    def logut_db(self):
+        with open('state.txt', 'w') as file:
+            file.write("")
+        return ("OK")
+
     def pre_login_db(self):
         with open('state.txt', 'r') as file:
-            f_line = file.readline()        
-            if f_line == "1"
+            f_line = file.readline()
+            if f_line != "":
+                data = f_line.split('$')
+                return ("OK",data[0],data[1])
+            else:
+                return "NOK"
+
 
 
         

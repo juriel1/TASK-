@@ -54,7 +54,7 @@ def main_sigin(page: ft.Page):
         text="Registrar",  
         width=300,
         height=75,  
-        on_click=siginup,   
+        on_click=lambda e:siginup(e),   
         style=ft.ButtonStyle(
             text_style=ft.TextStyle(size=30),            
         )
@@ -64,7 +64,7 @@ def main_sigin(page: ft.Page):
         text="Volver",
         width=200,
         height=75,
-        on_click=go_to_login,
+        on_click=lambda e:go_to_login(e),
         style=ft.ButtonStyle(
             text_style=ft.TextStyle(size=30)
         )
